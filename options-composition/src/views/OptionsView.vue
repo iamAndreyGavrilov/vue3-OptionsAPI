@@ -1,7 +1,7 @@
 <template>
   <div class="options">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <h3>Your have XXX Todo!</h3>
+    <h3>Your have {{ todosCount }} Todo!</h3>
     <input
       type="name"
       placeholder="add todo"
@@ -30,6 +30,7 @@ export default {
         { id: 2, name: "two" },
         { id: 3, name: "three" },
       ],
+      badWords: ["loh", "fuck"],
     };
   },
   methods: {
@@ -45,6 +46,19 @@ export default {
 
     deleteTodo(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
+    },
+  },
+  watch: {
+    newTodoName(value) {
+      if (this.badWords.includes(value.toLowerCase())) {
+        this.newTodoName = "";
+        alert("Bad word!");
+      }
+    },
+  },
+  computed: {
+    todosCount() {
+      return this.todos.length;
     },
   },
   components: {},
