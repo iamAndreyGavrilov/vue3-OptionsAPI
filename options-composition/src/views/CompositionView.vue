@@ -2,15 +2,25 @@
   <div class="options">
     <img alt="Vue logo" src="../assets/logo.png" />
     <h3>Your have {{ todosCount }} Todo!</h3>
-    <input
+    <!-- <input
       type="name"
       placeholder="add todo"
       v-model="newTodoName"
       @keyup.enter="addTodo"
+    /> -->
+    <input
+      type="name"
+      placeholder="add todo"
+      v-model="data.newTodoName"
+      @keyup.enter="addTodo"
     />
     <div>
       <ul>
-        <li v-for="todo in todos" :key="todo.id">
+        <!-- <li v-for="todo in todos" :key="todo.id">
+          <span>{{ todo.name }}</span>
+          <button @click="deleteTodo(todo.id)">x</button>
+        </li> -->
+        <li v-for="todo in data.todos" :key="todo.id">
           <span>{{ todo.name }}</span>
           <button @click="deleteTodo(todo.id)">x</button>
         </li>
@@ -32,31 +42,50 @@ export default {
       { id: 3, name: "three" },
     ]);
 
-    
+    let data = reactive({
+      newTodoName: "",
+      todos: [
+        { id: 1, name: "one" },
+        { id: 2, name: "two" },
+        { id: 3, name: "three" },
+      ],
+    });
 
     const badWords = ["loh", "fuck"];
 
-    let todosCount = computed(() => todos.value.length);
+    // let todosCount = computed(() => todos.value.length);
+    let todosCount = computed(() => data.todos.length);
 
-    watch(newTodoName, (newValue) => {
-      if (badWords.includes(newValue.toLowerCase())) {
-        newTodoName.value = "";
-        alert("Bad word!");
+    // watch(newTodoName, (newValue) => {
+    //   if (badWords.includes(newValue.toLowerCase())) {
+    // alert("Bad word! " + newTodoName.value + "!!!");
+    //     newTodoName.value = "";
+    //   }
+    // });
+
+    watch(data, (newValue) => {
+      if (badWords.includes(newValue.newTodoName.toLowerCase())) {
+        alert("Bad word! " + newValue.newTodoName + "!!!");
+        data.newTodoName = "";
       }
     });
 
     function addTodo() {
       let newTodo = {
         id: Date.now(),
-        name: newTodoName.value,
+        // name: newTodoName.value,
+        name: data.newTodoName,
       };
 
-      todos.value.push(newTodo);
-      newTodoName.value = "";
+      // todos.value.push(newTodo);
+      data.todos.push(newTodo);
+      // newTodoName.value = "";
+      data.newTodoName = "";
     }
 
     function deleteTodo(id) {
-      todos.value = todos.value.filter((todo) => todo.id !== id);
+      // todos.value = todos.value.filter((todo) => todo.id !== id);
+      data.todos = data.todos.filter((todo) => todo.id !== id);
     }
 
     return {
