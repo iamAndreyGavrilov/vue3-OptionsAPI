@@ -35,12 +35,12 @@ import { ref, computed, watch, reactive } from "vue";
 export default {
   name: "OptionsView",
   setup() {
-    let newTodoName = ref("");
-    let todos = ref([
-      { id: 1, name: "one" },
-      { id: 2, name: "two" },
-      { id: 3, name: "three" },
-    ]);
+    // let newTodoName = ref("");
+    // let todos = ref([
+    //   { id: 1, name: "one" },
+    //   { id: 2, name: "two" },
+    //   { id: 3, name: "three" },
+    // ]);
 
     let data = reactive({
       newTodoName: "",
@@ -90,8 +90,9 @@ export default {
 
     return {
       // возвращать нужно то, что будет использоваться в шаблоне
-      newTodoName,
-      todos,
+
+      // newTodoName,
+      // todos,
       data,
 
       todosCount,
